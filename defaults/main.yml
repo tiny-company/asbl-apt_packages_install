@@ -1,0 +1,48 @@
+---
+
+###################################################
+## apt_packages_install role vars
+###################################################
+
+## root username (default is root)
+root_user: root
+
+## user to run this playbook
+apt_packages_install_user: "{{ root_user }}"
+
+# could be : gnupg, pgpgpg, pgp
+apt_pgp_package_name: "gnupg"
+
+apt_repo_purge: true
+
+apt_repo_key: []
+  # - {"dest" : "/etc/apt/keyrings/dbeaver.gpg.key", "url" : "https://dbeaver.io/debs/dbeaver.gpg.key"}
+
+apt_repo: []
+  # - {"url" : "deb [signed-by=/etc/apt/keyrings/dbeaver.gpg.key] https://dbeaver.io/debs/dbeaver-ce /" , "filename" : "dbeaver-ce"}
+
+## if true then update source.list to the defined one in files
+apt_configure_source_list: false
+
+## if true then original source.list is backuped
+apt_backup_source_list_file: true
+
+apt_source_package_list:
+  - ca-certificates
+  - gnupg
+  - openssl
+  - bash
+  - git
+  - curl
+  - build-essential
+  - python3
+  - python3-pip
+  - pipx
+  - unzip
+  - xz-utils
+
+apt_source_remove_package_list: []
+
+apt_url_package_list: []
+#  - {url: "https://downloads.nestybox.com/sysbox/releases/v0.6.3/sysbox-ce_0.6.3-0.linux_amd64.deb", dest: "/tmp/sysbox-ce_0.6.3-0.linux_amd64.deb"}
+

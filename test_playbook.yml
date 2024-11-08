@@ -1,0 +1,9 @@
+---
+
+- name: Install apt packages playbook
+  hosts: all
+  roles:
+    - role: apt_packages_install
+      become: true
+      become_user: "{{ apt_packages_install_user }}"
+      tags: [apt_packages_install]

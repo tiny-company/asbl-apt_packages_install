@@ -1,0 +1,11 @@
+---
+# Description : Install package from url
+# file : _install_from_url.yml
+# Source : https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
+
+- name: Install the packages previously downloaded
+  ansible.builtin.apt:
+    deb: "{{ item.url }}"
+    state: present
+  loop: "{{ apt_url_package_list }}"
+  when: apt_url_package_list is defined

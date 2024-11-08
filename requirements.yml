@@ -1,0 +1,12 @@
+---
+
+roles:
+  - name: apt_packages_install
+    scm: git
+    src: https://github.com/webdrone-infra/asbl-apt_packages_install.git
+    version: main
+
+collections:
+  - name: community.general
+
+

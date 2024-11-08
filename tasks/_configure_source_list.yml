@@ -1,0 +1,48 @@
+---
+# Description : configure sources in main source.list depending of the distribution
+# file : _configure_source_list.yml
+# Source : https://www.debian.org/releases/index.fr.html
+
+
+- name: Backup existing source.list
+  ansible.builtin.copy:
+    src: "/etc/apt/sources.list"
+    dest: "/etc/apt/source.list_{{ '%Y-%m-%d' | strftime }}.bak"
+    remote_src: yes
+  when: apt_backup_source_list_file
+
+- name: installing source.list for debian 7 (wheezy)
+  ansible.builtin.copy:
+    src: debian7_source.list
+    dest: /etc/apt/sources.list
+  when: ansible_distribution == 'Debian' and ansible_distribution_version == '7'
+
+- name: installing source.list for debian 8 (jessie)
+  ansible.builtin.copy:
+    src: debian8_source.list
+    dest: /etc/apt/sources.list
+  when: ansible_distribution == 'Debian' and ansible_distribution_version == '8'
+
+- name: installing source.list for debian 9 (stretch)
+  ansible.builtin.copy:
+    src: debian9_source.list
+    dest: /etc/apt/sources.list
+  when: ansible_distribution == 'Debian' and ansible_distribution_version == '9'
+
+- name: installing source.list for debian 10 (buster)
+  ansible.builtin.copy:
+    src: debian10_source.list
+    dest: /etc/apt/sources.list
+  when: ansible_distribution == 'Debian' and ansible_distribution_version == '10'
+
+- name: installing source.list for debian 11 (Bullseye)
+  ansible.builtin.copy:
+    src: debian11_source.list
+    dest: /etc/apt/sources.list
+  when: ansible_distribution == 'Debian' and ansible_distribution_version == '11'
+
+- name: installing source.list for debian 12 (Bookworm)
+  ansible.builtin.copy:
+    src: debian12_source.list
+    dest: /etc/apt/sources.list
+  when: ansible_distribution == 'Debian' and ansible_distribution_version == '12'

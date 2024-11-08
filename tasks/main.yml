@@ -1,0 +1,43 @@
+---
+# Description : Install package
+# file : main.yml
+# Source : https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
+
+## Gather the installed package list on the server
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+  when: ansible_facts.packages is not defined
+
+## Make sur PGP is installed (use for key and apt repo management)
+- name: Make sur PGP is installed
+  ansible.builtin.apt:
+    name: "{{ apt_pgp_package_name }}"
+    state: present
+  when: "apt_pgp_package_name not in ansible_facts.packages"
+
+## Purge existing repositories
+- name: Gather a list of APT repository files
+  ansible.builtin.find:
+    paths: /etc/apt/sources.list.d/
+    patterns: "*.list"
+  register: apt_repo_files
+  when: apt_repo_purge
+
+- name: Remove APT repository files
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ apt_repo_files.files }}"
+  when: apt_repo_purge
+
+- import_tasks: _configure_source_list.yml
+  tags: [_configure_source_list]
+  when: apt_configure_source_list
+
+- import_tasks: _install_from_source.yml
+  tags: [_install_from_source]
+
+- import_tasks: _install_from_url.yml
+  tags: [_install_from_url]
+  when: apt_url_package_list is defined and apt_url_package_list is iterable

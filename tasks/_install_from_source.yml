@@ -1,0 +1,53 @@
+---
+# Description : Install package from source
+# file : _install_from_source.yml
+# Source : https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
+
+## add new apt repository's key
+- name: Add repo keys
+  block:
+    - name: Make sure the key path exist
+      ansible.builtin.file:
+        path: "{{ item.dest | dirname }}"
+        state: directory
+        mode: '0755'
+      with_items: "{{ apt_repo_key }}"
+      when: apt_repo_key is iterable and apt_repo_key is defined
+
+    - name: Adding the keys
+      ansible.builtin.get_url:
+        dest: "{{ item.dest }}"
+        url: "{{ item.url }}"
+        mode: '0755'
+      with_items: "{{ apt_repo_key }}"
+      when: apt_repo_key is iterable and apt_repo_key is defined
+
+## adding a new repo in specific files (source.list.d/)
+- name: Add apt repository in source.list.d/ files
+  ansible.builtin.apt_repository:
+    repo: "{{ item.url }}"
+    state: present
+    filename: "{{ item.filename }}"
+  with_items: "{{ apt_repo }}"
+  when: apt_repo is iterable and apt_repo is defined
+
+## update sources (apt update) if the last one is more than 3600 seconds ago
+- name: Update apt sources
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+## install desired package with apt
+- name: Install the desired package from apt_source_package_list
+  ansible.builtin.apt:
+    pkg: "{{ apt_source_package_list }}"
+    state: present
+  when: apt_source_package_list is defined and apt_source_package_list is iterable
+
+## uninstall desired package with apt
+- name: Remove the desired package from apt_source_remove_package_list
+  ansible.builtin.apt:
+    pkg: "{{ apt_source_remove_package_list }}"
+    state: absent
+    autoremove: true
+  when: apt_source_remove_package_list is iterable and apt_source_remove_package_list is defined
