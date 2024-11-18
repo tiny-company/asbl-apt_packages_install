@@ -43,6 +43,10 @@
     pkg: "{{ apt_source_package_list }}"
     state: present
   when: apt_source_package_list is defined and apt_source_package_list is iterable
+  register:  apt_source_package_result
+  until: apt_source_package_result is succeeded
+  retries: 3
+  delay: 10
 
 ## uninstall desired package with apt
 - name: Remove the desired package from apt_source_remove_package_list
@@ -51,3 +55,7 @@
     state: absent
     autoremove: true
   when: apt_source_remove_package_list is iterable and apt_source_remove_package_list is defined
+  register:  apt_source_remove_result
+  until: apt_source_remove_result is succeeded
+  retries: 3
+  delay: 10

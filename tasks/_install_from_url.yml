@@ -9,3 +9,7 @@
     state: present
   loop: "{{ apt_url_package_list }}"
   when: apt_url_package_list is defined
+  register:  apt_url_package_result
+  until: apt_url_package_result is succeeded
+  retries: 3
+  delay: 10
