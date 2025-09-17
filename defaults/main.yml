@@ -4,11 +4,8 @@
 ## apt_packages_install role vars
 ###################################################
 
-## root username (default is root)
-root_user: root
-
 ## user to run this playbook
-apt_packages_install_user: "{{ root_user }}"
+apt_packages_install_user: root
 
 # could be : gnupg, pgpgpg, pgp
 apt_pgp_package_name: "gnupg"
