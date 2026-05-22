@@ -1,8 +1,0 @@
-deb http://deb.debian.org/debian bullseye main non-free-firmware
-deb-src http://deb.debian.org/debian bullseye main non-free-firmware
-
-deb http://deb.debian.org/debian-security/ bullseye-security main non-free-firmware
-deb-src http://deb.debian.org/debian-security/ bullseye-security main non-free-firmware
-
-deb http://deb.debian.org/debian bullseye-updates main non-free-firmware
-deb-src http://deb.debian.org/debian bullseye-updates main non-free-firmware

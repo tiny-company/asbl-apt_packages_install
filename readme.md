@@ -2,7 +2,10 @@
 
 ## Description
 
-This repo contain the ansible role that install apt packages.
+This repo contain the ansible role that install apt packages :
+- configure apt source repo.
+- install ".deb" packages from url.
+- install packages from apt bin.
 
 ## Prerequisite
 
@@ -16,7 +19,7 @@ This repo contain the ansible role that install apt packages.
 ```
   - name: role_name
     scm: git
-    src: git@github.com:tiny-company/<repository_name>.git
+    src: https://github.com/tiny-company/<repository_name>.git
     version: main
 ```
 
@@ -27,8 +30,10 @@ ansible-galaxy install -r requirements.yml
 
 - Or manually get the playbook as collection (with ansible-galaxy) :
 ```
-ansible-galaxy collection install git@github.com:tiny-company/<repository_name>.git
+ansible-galaxy collection install https://github.com/tiny-company/<repository_name>.git
 ```
+
+- finally use role in playbook : [see test_playbook example](./test_playbook.yml)
 
 ### Variables
 

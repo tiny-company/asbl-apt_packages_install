@@ -3,7 +3,7 @@
 - name: Install apt packages playbook
   hosts: all
   roles:
-    - role: apt_packages_install
+    - role: ../asbl-apt_packages_install
       become: true
-      become_user: "{{ apt_packages_install_user }}"
+      become_user: "{{ root_username | default('root') }}"
       tags: [apt_packages_install]

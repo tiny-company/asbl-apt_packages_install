@@ -1,9 +1,9 @@
 ---
 galaxy_info:
   role_name: apt_packages_install
-  author: infrastructure
+  author: ottomatic
   description: role for installing packages
-  company: webdrone
+  company: tiny-company
   license: license GPL-3.0-only
   min_ansible_version: 2.14.1
 
